@@ -13,9 +13,13 @@
             <x-tag>{{ $job->category }}</x-tag>
         </div>
     </div>
-    <p class="my-6 text-slate-700">{!! nl2br(e($job->description)) !!}</p>
+
+    @if ($description)
+        <p class="my-6 text-slate-700">{!! nl2br(e($job->description)) !!}</p>
+    @endif
+    
 
     @if ($show)
-        <x-link-button :href="route('jobs.show', $job)">Show</x-link-button>
+        <x-link-button :href="route('jobs.show', $job)" class="mt-3">Show</x-link-button>
     @endif
 </div>
