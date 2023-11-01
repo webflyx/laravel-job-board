@@ -1,6 +1,6 @@
 <div class="relative">
-    <input class="border-0 w-full rounded-md ring-1 ring-slate-300 focus:ring-2 focus:ring-slate-500" type="text"
-        id="{{ $name }}" name="{{ $name }}" value="{{ $value }}" placeholder="{{ $placeholder }}" 
+    <input class="border-0 w-full rounded-md ring-1 ring-slate-300 focus:ring-2 focus:ring-slate-500"
+        id="{{ $name }}" type="{{ $type }}" name="{{ $name }}" value="{{ $value }}" placeholder="{{ $placeholder }}" 
         x-ref="input-{{ $name }}" />
     @if ($formRef)
     <button type="button" @click="$refs['input-{{$name}}'].value = ''; $refs['{{$formRef}}'].submit()" >
