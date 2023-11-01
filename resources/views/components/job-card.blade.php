@@ -9,15 +9,23 @@
             <div class="text-slate-600 ">{{ $job->location }}</div>
         </div>
         <div class="flex gap-2">
-            <x-tag>{{ Str::ucfirst($job->experience) }}</x-tag>
-            <x-tag>{{ $job->category }}</x-tag>
+            <x-tag>
+                <a href="{{ route('jobs.index', ['experience' => $job->experience]) }}">
+                    {{ Str::ucfirst($job->experience) }}
+                </a>
+            </x-tag>
+            <x-tag>
+                <a href="{{ route('jobs.index', ['category' => $job->category]) }}">
+                    {{ Str::ucfirst($job->category) }}
+                </a>
+            </x-tag>
         </div>
     </div>
 
     @if ($description)
         <p class="my-6 text-slate-700">{!! nl2br(e($job->description)) !!}</p>
     @endif
-    
+
 
     @if ($show)
         <x-link-button :href="route('jobs.show', $job)" class="mt-3">Show</x-link-button>

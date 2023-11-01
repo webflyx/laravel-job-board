@@ -6,9 +6,9 @@
 
         <title>Laravel Job Board</title>
 
-        @vite('resources/css/app.css')
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="mx-auto max-w-2xl mt-10 bg-slate-200 text-slate-800">
+    <body class="mx-auto max-w-2xl mt-10 text-slate-800 bg-gradient-to-r from-blue-200 to-blue-300">
         {{ $slot }}
     </body>
 </html>

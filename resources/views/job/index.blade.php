@@ -30,7 +30,7 @@
                     @endforeach
                 </div>
             </div>
-            <button class="mt-2 w-full">Filter</button>
+            <x-button class="mt-4 w-full">Filter</x-button>
         </form>
     </x-card>
 
