@@ -27,7 +27,11 @@
     @endif
 
     @if ($application)
-        <x-link-button href="{{ route('job.application.create', $job) }}">Apply this job</x-link-button>
+        @can('apply', $job)
+            <x-link-button href="{{ route('job.application.create', $job) }}">Apply this job</x-link-button>
+        @else
+            <div class="text-center font-medium">You already aplied to this job</div>
+        @endcan
     @endif
 
     @if ($show)

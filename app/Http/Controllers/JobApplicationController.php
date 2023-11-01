@@ -11,12 +11,15 @@ class JobApplicationController extends Controller
 
     public function create(Job $job)
     {
+        $this->authorize('apply', $job);
         return view("job.application.create", compact("job"));
     }
 
 
     public function store(Job $job, Request $request)
     {
+        $this->authorize('apply', $job);
+        
         JobApplication::create([
             'job_id' => $job->id,
             'user_id' => auth()->user()->id,
