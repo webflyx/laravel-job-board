@@ -36,7 +36,7 @@
 
     <div>
         @foreach ($jobs as $job)
-            <x-job-card :$job :show="true" :description="false" class="mb-4" />
+            <x-job-card :$job :show="true" :description="false" :application="false" class="mb-4" />
         @endforeach
     </div>
 </x-layout>

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\JobApplicationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +23,7 @@ Route::get('login', fn() => to_route('auth.create'))->name('login');
 Route::get('logout', fn() => to_route('auth.destroy'))->name('logout');
 
 Route::resource('auth', AuthController::class)->only(['create', 'store', 'destroy']);
+
+Route::middleware('auth')->group(function () {
+    Route::resource('job.application', JobApplicationController::class)->only(['create', 'store']);
+});

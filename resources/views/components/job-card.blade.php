@@ -26,6 +26,9 @@
         <p class="my-6 text-slate-700">{!! nl2br(e($job->description)) !!}</p>
     @endif
 
+    @if ($application)
+        <x-link-button href="{{ route('job.application.create', $job) }}">Apply this job</x-link-button>
+    @endif
 
     @if ($show)
         <x-link-button :href="route('jobs.show', $job)" class="mt-3">Show</x-link-button>

@@ -1,6 +1,6 @@
 <x-layout>
     <x-breadcrumbs class="mb-4" :links="['Jobs' => route('jobs.index'), $job->title => false]" />
-    <x-job-card :$job :show="false" :description="true" />
+    <x-job-card :$job :show="false" :description="true" application="true" />
 
     <x-card class="my-6">
         <h2 class="text-xl font-semibold border-b pb-2 border-slate-200">Other jobs by {{ $job->employer->company_name }}</h2>
