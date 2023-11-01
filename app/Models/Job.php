@@ -22,19 +22,22 @@ class Job extends Model
 
     public function scopeFilter(Builder|QueryBuilder $query, array $filters): Builder|QueryBuilder
     {
-        return $query->when($filters['search'], function ($query) {
-            $query->where(function ($query) {
-                $query->where('title', 'like', '%' . request('search') . '%')
-                    ->orWhere('description', 'LIKE', '%' . request('search') . '%');
+        return $query->when($filters['search'] ?? null, function ($query) use ($filters) {
+            $query->where(function ($query) use ($filters) {
+                $query->where('title', 'like', '%' . $filters['search'] . '%')
+                    ->orWhere('description', 'LIKE', '%' . $filters['search'] . '%')
+                    ->orWhereHas('employer', function ($query) use ($filters) {
+                        $query->where('company_name', 'LIKE', '%' . $filters['search'] . '%');
+                    });
             });
-        })->when($filters['min_salary'] ?? null, function ($query) {
-            $query->where('salary', '>=', request('min_salary'));
-        })->when($filters['max_salary'] ?? null, function ($query) {
-            $query->where('salary', '<=', request('max_salary'));
-        })->when($filters['experience'] ?? null, function ($query) {
-            $query->where('experience', '=', request('experience'));
-        })->when($filters['category'] ?? null, function ($query) {
-            $query->where('category', '=', request('category'));
+        })->when($filters['min_salary'] ?? null, function ($query) use ($filters) {
+            $query->where('salary', '>=', $filters['min_salary']);
+        })->when($filters['max_salary'] ?? null, function ($query) use ($filters) {
+            $query->where('salary', '<=', $filters['max_salary']);
+        })->when($filters['experience'] ?? null, function ($query) use ($filters) {
+            $query->where('experience', '=', $filters['experience']);
+        })->when($filters['category'] ?? null, function ($query) use ($filters) {
+            $query->where('category', '=', $filters['category']);
         });
     }
 }
