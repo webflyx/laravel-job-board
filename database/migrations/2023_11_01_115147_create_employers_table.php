@@ -33,7 +33,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('jobs', function (Blueprint $table) {
-            $table->foreignIdFor(Employer::class);
+            $table->dropForeignIdFor(Employer::class);
         });
 
         Schema::dropIfExists('employers');
