@@ -19,6 +19,7 @@
             @auth
                 <div class="font-semibold">{{ auth()->user()->name }}</div>
                 <a href="{{ route('my-job-application.index') }}">My Job Applications</a>
+                <a href="{{ route('employer.my-jobs.index', auth()->user()) }}">My Jobs</a>
                 <form method="POST" action="{{ route('auth.destroy', auth()->user()->id) }}">
                     @csrf
                     @method('DELETE')
@@ -33,7 +34,14 @@
     @if (session('success'))
         <div class="border border-l-4 mb-6 rounded-md border-green-600 bg-green-200 px-4 py-2">
             <div class="text-lg font-medium">Success!</div>
-            <div>Job application submitted.</div>
+            <div>{{session('success')}}</div>
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="border border-l-4 mb-6 rounded-md border-red-600 bg-red-300 px-4 py-2">
+            <div class="text-lg font-medium">Error!</div>
+            <div>{{session('error')}}</div>
         </div>
     @endif
 
