@@ -4,34 +4,36 @@ namespace App\Http\Controllers;
 
 use App\Models\Job;
 use Illuminate\Http\Request;
-use App\Models\JobApplication;
+use App\Http\Requests\JobApplicationRequest;
 
 class JobApplicationController extends Controller
 {
-
     public function create(Job $job)
     {
         $this->authorize('apply', $job);
-        return view("job.application.create", compact("job"));
+        return view('job.application.create', compact('job'));
     }
 
-
-    public function store(Job $job, Request $request)
+    public function store(Job $job, JobApplicationRequest $request)
     {
         $this->authorize('apply', $job);
-        
-        JobApplication::create([
-            'job_id' => $job->id,
-            'user_id' => auth()->user()->id,
-            ...$request->validate(
-                ['expected_salary' => 'required|numeric|min:1|max:1000000'],
-            )
+
+        $validatedData = $request->validated();
+
+        $file = $request->file('cv');
+        $path = $file->store('cvs', 'private');
+
+        $job->jobApplications()->create([
+            'user_id' => $request->user()->id,
+            'expected_salary' => $validatedData['expected_salary'],
+            'cv_path' => $path
         ]);
 
-        return redirect()->route('jobs.show', $job)->with('success', 'Job application submitted.');
+        return redirect()->route('jobs.show', $job)
+            ->with('success', 'Job application submitted.');
     }
 
-    public function destroy(JobApplication $jobApplication)
+    public function destroy(string $id)
     {
         //
     }

@@ -1,5 +1,5 @@
 <div class="relative">
-    <input class="border-0 w-full rounded-md ring-1 ring-slate-300 focus:ring-2 focus:ring-slate-500"
+    <input class="border-0 w-full rounded-md ring-1 ring-slate-300 focus:ring-2 focus:ring-slate-500 px-4 py-2"
         id="{{ $name }}" type="{{ $type }}" name="{{ $name }}" value="{{ $value }}" placeholder="{{ $placeholder }}" 
         x-ref="input-{{ $name }}" />
     @if ($formRef)
