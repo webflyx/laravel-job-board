@@ -37,4 +37,6 @@
     @if ($show)
         <x-link-button :href="route('jobs.show', $job)" class="mt-3">Show</x-link-button>
     @endif
+
+    {{ $slot }}
 </div>
