@@ -17,7 +17,8 @@
 
         <div class="flex space-x-4 items-center">
             @auth
-                <div>{{ auth()->user()->name }}</div>
+                <div class="font-semibold">{{ auth()->user()->name }}</div>
+                <a href="{{ route('my-job-application.index') }}">My Job Applications</a>
                 <form method="POST" action="{{ route('auth.destroy', auth()->user()->id) }}">
                     @csrf
                     @method('DELETE')
