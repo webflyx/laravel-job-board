@@ -8,15 +8,23 @@
                     <div>
                         <div>Applied {{ $application->created_at->diffForHumans() }}</div>
                         <div>Expected Salary: ${{ number_format($application->expected_salary) }}</div>
-                        <div>{{ Str::plural('Applicant', $application->job->job_applications_count) }}: {{ $application->job->job_applications_count }}</div>
-                        <div>Average asking salary: ${{ number_format($application->job->job_applications_avg_expected_salary) }}</div>
+                        <div>{{ Str::plural('Applicant', $application->job->job_applications_count) }}:
+                            {{ $application->job->job_applications_count }}</div>
+                        <div>Average asking salary:
+                            ${{ number_format($application->job->job_applications_avg_expected_salary) }}</div>
                     </div>
-                    <div>r</div>
+                    <div>
+                        <form method="POST" action="{{ route('my-job-application.destroy', $application->id) }}">
+                            @csrf
+                            @method('DELETE')
+                            <x-button>Cancel</x-button>
+                        </form>
+                    </div>
                 </div>
             </x-job-card>
 
         @empty
-            <div>No active applications found</div>
+            <x-card>No active applications found</x-card>
         @endforelse
     </div>
 
