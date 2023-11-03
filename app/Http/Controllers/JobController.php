@@ -7,11 +7,10 @@ use Illuminate\Http\Request;
 
 class JobController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
+        $this->authorize('viewAny', Job::class);
 
         $filters = request()->only([
             'search',
@@ -28,51 +27,11 @@ class JobController extends Controller
         return view('job.index', ['jobs' => $jobs, 'categories' => Job::$categories, 'experiences' => Job::$experience]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(Job $job)
     {
+        $this->authorize('view', $job);
+        
         return view('job.show', compact('job'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Job $job)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Job $job)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Job $job)
-    {
-        //
-    }
 }

@@ -12,6 +12,8 @@ class MyJobsController extends Controller
 
     public function index()
     {  
+        $this->authorize('viewAnyEmployer', Job::class);
+
         $jobs = auth()->user()->employer->jobs()
             ->with('employer','jobApplications', 'jobApplications.user')
             ->latest()->get();
@@ -21,11 +23,14 @@ class MyJobsController extends Controller
 
     public function create()
     {
+        $this->authorize('viewAnyEmployer', Job::class);
         return view("employer.my_job.create");
     }
 
     public function store(JobRequest $request)
     {
+        $this->authorize('create', Job::class);
+
         $validateData = $request->validated();
 
         // $newJob = $job->create([
@@ -41,6 +46,7 @@ class MyJobsController extends Controller
 
     public function edit(string $id, Job $myJob)
     {
+        $this->authorize('update', $myJob);
         return  view('employer.my_job.edit', ['job' => $myJob]);
     }
 

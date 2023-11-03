@@ -10,9 +10,14 @@ use Illuminate\Auth\Access\Response;
 class JobPolicy
 {
 
-    public function viewAny(User $user): bool
+    public function viewAny(?User $user): bool
     {
         return true;
+    }
+
+    public function viewAnyEmployer(User $user): bool
+    {
+        return $user->employer != null;
     }
 
     public function view(User $user, Job $job): bool
@@ -22,27 +27,39 @@ class JobPolicy
 
     public function create(User $user): bool
     {
-        return true;
+        return $user->employer != null;
     }
 
-    public function update(User $user, Job $job): bool
+    public function update(User $user, Job $job): bool|Response
     {
-        return false;
+        if($user->employer === null) {
+            return false;
+        }
+
+        if($user->id != $job->employer->user_id) {
+            return false;
+        }
+        
+        if($job->jobApplications()->count() > 0){
+            return Response::deny('Cant update job with applications', 403);
+        }
+
+        return true;
     }
 
     public function delete(User $user, Job $job): bool
     {
-        return false;
+        return $user->id === $job->employer->user_id;
     }
 
     public function restore(User $user, Job $job): bool
     {
-        return false;
+        return $user->id === $job->employer->user_id;
     }
 
     public function forceDelete(User $user, Job $job): bool
     {
-        return false;
+        return $user->id === $job->employer->user_id;
     }
 
     public function apply(User $user, Job $job): bool
