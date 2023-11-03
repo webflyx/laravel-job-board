@@ -1,6 +1,10 @@
-<div {{ $attributes->class('border shadow-md p-4 bg-slate-50 rounded-md') }}>
+<div {{ $attributes->class(['border shadow-md p-4 bg-slate-50 rounded-md', 'bg-gray-300' => $job->deleted_at ]) }}>
     <div class="flex justify-between items-center">
-        <div class="text-lg font-medium">{{ $job->title }}</div>
+        <div class="text-lg font-medium">{{ $job->title }} 
+        @if ($job->deleted_at)
+            <span class="text-red-500 font-medium ml-4">Deleted</span>
+        @endif
+        </div>
         <div class="text-slate-600 ">${{ number_format($job->salary) }}</div>
     </div>
     <div class="flex justify-between items-center mt-2 ">
