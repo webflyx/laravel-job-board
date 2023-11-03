@@ -50,15 +50,16 @@ class MyJobsController extends Controller
         return  view('employer.my_job.edit', ['job' => $myJob]);
     }
 
-    public function update(JobRequest $request, string $id, Job $myJob)
+    public function update(JobRequest $request, Employer $employer, Job $myJob)
     {
         $myJob->update($request->validated());
 
-        return redirect()->route('employer.my-jobs.index', auth()->user())->with('success', 'Job successfully updated');
+        return redirect()->route('employer.my-jobs.index', $employer)->with('success', 'Job successfully updated');
     }
 
-    public function destroy(string $id)
+    public function destroy(Employer $employer, Job $myJob)
     {
-        //
+        $myJob->delete();
+        return redirect()->route('employer.my-jobs.index', $employer)->with('success', 'Job successfully deleted');
     }
 }

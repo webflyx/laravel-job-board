@@ -7,7 +7,14 @@
     @forelse ($jobs as $job)
         <x-job-card :$job :show="false" :description="false" :application="false" class="mb-4" >
             
-            <x-link-button class="my-4" href="{{ route('employer.my-jobs.edit', [auth()->user(), $job]) }}">Edit</x-link-button>
+            <div class="flex gap-2 my-4">
+                <x-link-button class="" href="{{ route('employer.my-jobs.edit', [auth()->user()->employer, $job]) }}">Edit</x-link-button>
+                <form action="{{ route('employer.my-jobs.destroy', [auth()->user()->employer, $job]) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <x-button type="submit">Delete</x-button>
+                </form>
+            </div>
 
             <div class="mt-6">
                 @forelse ($job->jobApplications as $application)
