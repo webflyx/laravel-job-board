@@ -2,44 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\JobRequest;
+use App\Models\Employer;
 use App\Models\Job;
 use Illuminate\Http\Request;
 
 class MyJobsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {  
         $jobs = auth()->user()->employer->jobs()
             ->with('employer','jobApplications', 'jobApplications.user')
             ->latest()->get();
-//dd($jobs->toArray());
+
         return view("employer.my_job.index", compact("jobs"));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view("employer.my_job.create");
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Job $job, Request $request)
+    public function store(JobRequest $request)
     {
-        $validateData = $request->validate([
-            'title' => 'required|string|min:5|max:255',
-            'description' => 'required|string|min:5|max:5000',
-            'salary' => 'required|numeric|min:1|max:1000000',
-            'location' => 'required|string|min:3|max:255',
-            'category' => 'required|in:' . implode(',',Job::$categories),
-            'experience' => 'required|in:' . implode(',',Job::$experience),
-        ]);
+        $validateData = $request->validated();
 
         // $newJob = $job->create([
         //     ...$validateData,
@@ -52,33 +39,18 @@ class MyJobsController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(string $id, Job $myJob)
     {
-        //
+        return  view('employer.my_job.edit', ['job' => $myJob]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(JobRequest $request, string $id, Job $myJob)
     {
-        //
+        $myJob->update($request->validated());
+
+        return redirect()->route('employer.my-jobs.index', auth()->user())->with('success', 'Job successfully updated');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         //

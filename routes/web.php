@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('my-job-application', MyJobApplicationController::class)->only(['index', 'destroy']);
 
     Route::resource('employer', EmployerController::class)->only(['create', 'store']);
-
-    Route::resource('employer.my-jobs', MyJobsController::class)->only(['index']);
-    Route::middleware('employer')->resource('employer.my-jobs', MyJobsController::class)->only(['index', 'create', 'store']);
+        
+    Route::middleware('employer')->resource('employer.my-jobs', MyJobsController::class)->only(['index', 'create', 'store', 'edit', 'update']);
+   
 });
