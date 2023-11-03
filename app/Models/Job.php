@@ -17,6 +17,10 @@ class Job extends Model
     public static array $experience = ['entry', 'intermediate', 'senior'];
     public static array $categories = ['Development', 'Design', 'Marketing', 'HR', 'Finance', 'Sales'];
 
+    protected $fillable = [
+        'title', 'description', 'location', 'salary', 'category', 'experience', 'employer_id', 'user_id'
+    ];
+
     public function employer(): BelongsTo
     {
         return $this->belongsTo(Employer::class);

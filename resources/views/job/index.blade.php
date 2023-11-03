@@ -16,7 +16,6 @@
                     </div>
                 </div>
                 <div class="flex flex-col">
-                    <div class="font-medium"></div>
                     <x-label for="experience">Experience</x-label>
                     <x-input-radio name="experience" label="All" value="" />
                     @foreach ($experiences as $experience)
